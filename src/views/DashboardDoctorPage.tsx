@@ -18,6 +18,7 @@ type Cita = {
   medico: string;
   notas?: string;
   estado: "pendiente" | "completada" | "cancelada" | string;
+  resultado?: string; // ← NUEVO CAMPO EN EL TIPO
 };
 
 type Paciente = {
@@ -100,7 +101,7 @@ export default function MedicoDashboard() {
         backgroundColor: c.estado === "completada" ? "#16a34a" : "#2563eb",
         borderColor: c.estado === "completada" ? "#15803d" : "#1e40af",
         textColor: "#ffffff",
-        extendedProps: { ...c },
+        extendedProps: { ...c }, // incluye resultado
       })),
     [citas, pacientes]
   );
@@ -114,7 +115,10 @@ export default function MedicoDashboard() {
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
-      body: JSON.stringify({ estado }),
+      body: JSON.stringify({
+        estado,
+        resultado: selected.resultado ?? "", // ← mandamos también el resultado
+      }),
     });
 
     if (!res.ok) {
@@ -189,6 +193,7 @@ export default function MedicoDashboard() {
                 medico: ext.medico,
                 notas: ext.notas,
                 estado: ext.estado,
+                resultado: ext.resultado || "", // ← recogemos el resultado existente
               });
             }}
             height="650px"
@@ -256,6 +261,25 @@ export default function MedicoDashboard() {
                     <span className="text-gray-800">{selected.notas}</span>
                   </p>
                 )}
+
+                {/* NUEVO: textarea para resultado */}
+                <div className="mt-3">
+                  <label className="block text-xs font-semibold text-gray-600 mb-1">
+                    Resultado de la cita
+                  </label>
+                  <textarea
+                    className="w-full text-sm border rounded-lg p-2 min-h-[80px] resize-y bg-white"
+                    placeholder="Escribe aquí el diagnóstico, tratamiento u observaciones..."
+                    value={selected.resultado ?? ""}
+                    onChange={(e) =>
+                      setSelected((prev) =>
+                        prev
+                          ? { ...prev, resultado: e.target.value }
+                          : prev
+                      )
+                    }
+                  />
+                </div>
               </section>
 
               <div className="mt-6 grid grid-cols-1 gap-3">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Base de la API: viene de VITE_API_URL o usa localhost por defecto
@@ -26,14 +26,16 @@ export default function RegisterPage() {
   });
 
   // Manejar inputs de manera dinámica
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
 
     if (name === "rol") setRol(value);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -58,7 +60,6 @@ export default function RegisterPage() {
 
       // Redirigir al login
       navigate("/login");
-
     } catch (err) {
       console.error(err);
       setError("Error de conexión con el servidor");
@@ -75,7 +76,9 @@ export default function RegisterPage() {
         </h1>
 
         {error && (
-          <div className="p-2 text-red-600 text-center font-semibold">{error}</div>
+          <div className="p-2 text-red-600 text-center font-semibold">
+            {error}
+          </div>
         )}
 
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -180,7 +183,10 @@ export default function RegisterPage() {
 
         <p className="text-center text-sm text-gray-600 mt-4">
           ¿Ya tienes cuenta?{" "}
-          <a href="/login" className="text-blue-600 font-semibold hover:underline">
+          <a
+            href="/login"
+            className="text-blue-600 font-semibold hover:underline"
+          >
             Inicia sesión aquí
           </a>
         </p>

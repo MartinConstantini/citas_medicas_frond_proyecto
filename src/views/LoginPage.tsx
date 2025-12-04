@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Base de la API: viene de VITE_API_URL o usa localhost por defecto
@@ -32,7 +32,7 @@ export default function LoginPage() {
     else if (payload.rol === "medico") navigate("/medico", { replace: true });
   }, [navigate]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
 

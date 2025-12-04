@@ -19,6 +19,7 @@ type Cita = {
   paciente: string;
   notas?: string;
   estado: "pendiente" | "completada" | "cancelada" | string;
+  resultado?: string; // ← NUEVO CAMPO
 };
 
 type Medico = {
@@ -60,7 +61,7 @@ export default function PacienteDashboard() {
         start: new Date(`${cita.fecha}T${cita.hora}:00`).toISOString(),
         backgroundColor: cita.estado === "completada" ? "#22c55e" : "#3b82f6",
         borderColor: cita.estado === "completada" ? "#16a34a" : "#1d4ed8",
-        extendedProps: { ...cita },
+        extendedProps: { ...cita }, // incluye resultado
       })),
     [citas]
   );
@@ -114,6 +115,7 @@ export default function PacienteDashboard() {
       paciente: payload?.id || "",
       notas: "",
       estado: "pendiente",
+      resultado: "", // por defecto vacío
     });
     setIsOpen(true);
   }
@@ -129,6 +131,7 @@ export default function PacienteDashboard() {
       paciente: ext.paciente,
       notas: ext.notas || "",
       estado: ext.estado || "pendiente",
+      resultado: ext.resultado || "", // ← recogemos el resultado para mostrarlo
     });
     setIsOpen(true);
   }
@@ -156,6 +159,7 @@ export default function PacienteDashboard() {
         paciente: payload.id,
         notas: editing.notas,
         estado: editing.estado,
+        // IMPORTANTE: NO mandamos resultado desde el paciente
       }),
     });
 
@@ -193,7 +197,9 @@ export default function PacienteDashboard() {
 
     citas.forEach((cita, index) => {
       pdf.text(
-        `${index + 1}. ${cita.fecha} ${cita.hora} - ${cita.titulo} - ${cita.estado}`,
+        `${index + 1}. ${cita.fecha} ${cita.hora} - ${cita.titulo} - ${
+          cita.estado
+        }${cita.resultado ? " - " + cita.resultado : ""}`,
         10,
         20 + index * 8
       );
@@ -278,15 +284,21 @@ export default function PacienteDashboard() {
             {citas.map((c) => (
               <li
                 key={c.id}
-                className="flex items-center justify-between border-b last:border-b-0 pb-1"
+                className="flex items-start justify-between border-b last:border-b-0 pb-2 gap-4"
               >
-                <div>
+                <div className="flex-1">
                   <p className="font-medium">{c.titulo}</p>
                   <p className="text-gray-500">
                     {c.fecha} {c.hora} - {c.estado}
                   </p>
+                  {c.resultado && (
+                    <p className="text-gray-600 mt-1">
+                      <span className="font-semibold">Resultado:</span>{" "}
+                      {c.resultado}
+                    </p>
+                  )}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-1">
                   <button
                     className="px-2 py-1 rounded border text-blue-600"
                     onClick={() => {
@@ -370,6 +382,20 @@ export default function PacienteDashboard() {
                 setEditing({ ...editing, notas: e.target.value })
               }
             />
+
+            {/* Resultado solo lectura para el paciente */}
+            {editing.resultado && (
+              <>
+                <label className="block text-sm mb-1">
+                  Resultado del médico
+                </label>
+                <textarea
+                  className="border p-2 w-full mb-3 h-20 bg-gray-50 text-gray-700"
+                  value={editing.resultado}
+                  readOnly
+                />
+              </>
+            )}
 
             <div className="flex gap-2 mb-2">
               <button
