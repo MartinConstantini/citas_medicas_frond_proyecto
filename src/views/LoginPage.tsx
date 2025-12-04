@@ -1,5 +1,5 @@
-import { useEffect, useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 // Base de la API: viene de VITE_API_URL o usa localhost por defecto
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
@@ -32,7 +32,7 @@ export default function LoginPage() {
     else if (payload.rol === "medico") navigate("/medico", { replace: true });
   }, [navigate]);
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
 
@@ -65,7 +65,6 @@ export default function LoginPage() {
       else if (rol === "paciente") navigate("/paciente");
       else if (rol === "medico") navigate("/medico");
       else navigate("/");
-
     } catch (error) {
       console.error(error);
       setErrorMsg("Error de conexión con el servidor");
@@ -122,9 +121,12 @@ export default function LoginPage() {
 
         <p className="text-center text-sm text-gray-600 mt-4">
           ¿No tienes cuenta?{" "}
-          <a className="text-blue-600 font-semibold hover:underline" href="/register">
+          <Link
+            className="text-blue-600 font-semibold hover:underline"
+            to="/register"
+          >
             Regístrate aquí
-          </a>
+          </Link>
         </p>
       </div>
     </div>

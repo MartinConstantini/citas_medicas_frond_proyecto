@@ -1,5 +1,5 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 // Base de la API: viene de VITE_API_URL o usa localhost por defecto
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
@@ -25,9 +25,8 @@ export default function RegisterPage() {
     password: "",
   });
 
-  // Manejar inputs de manera dinámica
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -35,7 +34,7 @@ export default function RegisterPage() {
     if (name === "rol") setRol(value);
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -55,10 +54,7 @@ export default function RegisterPage() {
         return;
       }
 
-      // Registro correcto
       console.log("Usuario creado:", data);
-
-      // Redirigir al login
       navigate("/login");
     } catch (err) {
       console.error(err);
@@ -82,7 +78,6 @@ export default function RegisterPage() {
         )}
 
         <form className="space-y-5" onSubmit={handleSubmit}>
-          {/* INPUTS DINÁMICOS */}
           {[
             { label: "Nombre", name: "nombre" },
             { label: "Apellido paterno", name: "apaterno" },
@@ -106,7 +101,6 @@ export default function RegisterPage() {
             </div>
           ))}
 
-          {/* ROL */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Rol
@@ -124,7 +118,6 @@ export default function RegisterPage() {
             </select>
           </div>
 
-          {/* CÉDULA SOLO SI ES MÉDICO */}
           {rol === "medico" && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -141,7 +134,6 @@ export default function RegisterPage() {
             </div>
           )}
 
-          {/* CORREO */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Correo electrónico
@@ -156,7 +148,6 @@ export default function RegisterPage() {
             />
           </div>
 
-          {/* PASSWORD */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Contraseña
@@ -171,7 +162,6 @@ export default function RegisterPage() {
             />
           </div>
 
-          {/* BOTÓN */}
           <button
             type="submit"
             disabled={loading}
@@ -183,12 +173,9 @@ export default function RegisterPage() {
 
         <p className="text-center text-sm text-gray-600 mt-4">
           ¿Ya tienes cuenta?{" "}
-          <a
-            href="/login"
-            className="text-blue-600 font-semibold hover:underline"
-          >
+          <Link to="/login" className="text-blue-600 font-semibold hover:underline">
             Inicia sesión aquí
-          </a>
+          </Link>
         </p>
       </div>
     </div>
