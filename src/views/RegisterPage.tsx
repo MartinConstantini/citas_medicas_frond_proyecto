@@ -65,7 +65,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-100 to-blue-300 p-4">
       <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-8">
         <h1 className="text-3xl font-bold text-center text-blue-700 mb-6">
           Crear Cuenta
@@ -97,6 +97,7 @@ export default function RegisterPage() {
                 value={(form as any)[item.name]}
                 onChange={handleChange}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                required
               />
             </div>
           ))}
@@ -110,11 +111,11 @@ export default function RegisterPage() {
               value={form.rol}
               onChange={handleChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              required
             >
               <option value="">Selecciona un rol</option>
               <option value="paciente">Paciente</option>
               <option value="medico">Médico</option>
-              <option value="admin">Administrador</option>
             </select>
           </div>
 
@@ -145,6 +146,7 @@ export default function RegisterPage() {
               onChange={handleChange}
               placeholder="correo@correo.com"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              required
             />
           </div>
 
@@ -159,6 +161,7 @@ export default function RegisterPage() {
               onChange={handleChange}
               placeholder="********"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+              required
             />
           </div>
 

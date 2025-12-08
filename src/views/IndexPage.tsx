@@ -410,7 +410,7 @@ export default function IndexPage() {
       {/* Sidebar */}
       <aside className="w-72 bg-gradient-to-b from-blue-900 to-sky-800 text-white hidden md:flex flex-col">
         <div className="p-6 border-b border-white/10">
-          <h2 className="text-2xl font-bold">ClinicaCare</h2>
+          <h2 className="text-2xl font-bold">Clinica</h2>
           <p className="text-sm text-blue-100 mt-1">Panel de administración</p>
         </div>
 
@@ -575,49 +575,57 @@ export default function IndexPage() {
         )}
 
         {activeSection === "pacientes" && (
-          <div className="bg-white p-4 rounded-lg shadow-sm">
+          <div className="bg-white p-4 rounded-lg shadow">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-sm font-semibold text-gray-700">Pacientes</h3>
               <button
                 onClick={() => openUserModal("paciente")}
-                className="px-3 py-2 rounded bg-blue-600 text-white text-sm"
+                className="px-3 py-1.5 rounded border text-blue-600 text-xs hover:bg-blue-50"
               >
                 + Nuevo paciente
               </button>
             </div>
-            <div className="overflow-x-auto text-sm">
-              <table className="min-w-full border divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-3 py-2 text-left">Nombre</th>
-                    <th className="px-3 py-2 text-left">Correo</th>
-                    <th className="px-3 py-2 text-left">Teléfono</th>
-                    <th className="px-3 py-2 text-left">Ciudad</th>
-                    <th className="px-3 py-2 text-right">Acciones</th>
+
+            <div className="overflow-x-auto text-xs">
+              <table className="min-w-full border-separate border-spacing-y-2">
+                <thead>
+                  <tr className="text-gray-600">
+                    <th className="px-3 py-1 text-left">Nombre</th>
+                    <th className="px-3 py-1 text-left">Correo</th>
+                    <th className="px-3 py-1 text-left">Teléfono</th>
+                    <th className="px-3 py-1 text-left">Ciudad</th>
+                    <th className="px-3 py-1 text-right">Acciones</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {pacientes.map((p) => (
-                    <tr key={p.id} className="border-b">
+                    <tr key={p.id} className="bg-gray-50 rounded border">
                       <td className="px-3 py-2">
-                        {p.nombre} {p.apaterno}
+                        <p className="font-medium text-gray-700">
+                          {p.nombre} {p.apaterno}
+                        </p>
                       </td>
-                      <td className="px-3 py-2">{p.correo}</td>
-                      <td className="px-3 py-2">{p.telefono}</td>
-                      <td className="px-3 py-2">{p.ciudad}</td>
-                      <td className="px-3 py-2 text-right space-x-2">
-                        <button
-                          onClick={() => openUserModal("paciente", p)}
-                          className="text-blue-600 hover:underline"
-                        >
-                          Editar
-                        </button>
-                        <button
-                          onClick={() => deleteUsuario(p.id)}
-                          className="text-red-500 hover:underline"
-                        >
-                          Eliminar
-                        </button>
+
+                      <td className="px-3 py-2 text-gray-600">{p.correo}</td>
+                      <td className="px-3 py-2 text-gray-600">{p.telefono}</td>
+                      <td className="px-3 py-2 text-gray-600">{p.ciudad}</td>
+
+                      <td className="px-3 py-2 text-right">
+                        <div className="flex justify-end gap-2">
+                          <button
+                            onClick={() => openUserModal("paciente", p)}
+                            className="px-2 py-1 rounded border text-blue-600 hover:bg-blue-50"
+                          >
+                            Editar
+                          </button>
+                          <button
+                            onClick={() => deleteUsuario(p.id)}
+                            className="px-2 py-1 rounded border text-red-600 hover:bg-red-50"
+                          >
+                            Eliminar
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -627,48 +635,57 @@ export default function IndexPage() {
           </div>
         )}
 
+
         {activeSection === "medicos" && (
-          <div className="bg-white p-4 rounded-lg shadow-sm">
+          <div className="bg-white p-4 rounded-lg shadow">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-sm font-semibold text-gray-700">Médicos</h3>
               <button
                 onClick={() => openUserModal("medico")}
-                className="px-3 py-2 rounded bg-blue-600 text-white text-sm"
+                className="px-3 py-1.5 rounded border text-blue-600 text-xs hover:bg-blue-50"
               >
                 + Nuevo médico
               </button>
             </div>
-            <div className="overflow-x-auto text-sm">
-              <table className="min-w-full border divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-3 py-2 text-left">Nombre</th>
-                    <th className="px-3 py-2 text-left">Correo</th>
-                    <th className="px-3 py-2 text-left">Cédula</th>
-                    <th className="px-3 py-2 text-right">Acciones</th>
+
+            <div className="overflow-x-auto text-xs">
+              <table className="min-w-full border-separate border-spacing-y-2">
+                <thead>
+                  <tr className="text-gray-600">
+                    <th className="px-3 py-1 text-left">Nombre</th>
+                    <th className="px-3 py-1 text-left">Correo</th>
+                    <th className="px-3 py-1 text-left">Cédula</th>
+                    <th className="px-3 py-1 text-right">Acciones</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {medicos.map((m) => (
-                    <tr key={m.id} className="border-b">
+                    <tr key={m.id} className="bg-gray-50 rounded border">
                       <td className="px-3 py-2">
-                        {m.nombre} {m.apaterno}
+                        <p className="font-medium text-gray-700">
+                          {m.nombre} {m.apaterno}
+                        </p>
                       </td>
-                      <td className="px-3 py-2">{m.correo}</td>
-                      <td className="px-3 py-2">{m.cedula}</td>
-                      <td className="px-3 py-2 text-right space-x-2">
-                        <button
-                          onClick={() => openUserModal("medico", m)}
-                          className="text-blue-600 hover:underline"
-                        >
-                          Editar
-                        </button>
-                        <button
-                          onClick={() => deleteUsuario(m.id)}
-                          className="text-red-500 hover:underline"
-                        >
-                          Eliminar
-                        </button>
+
+                      <td className="px-3 py-2 text-gray-600">{m.correo}</td>
+                      <td className="px-3 py-2 text-gray-600">{m.cedula}</td>
+
+                      <td className="px-3 py-2 text-right">
+                        <div className="flex justify-end gap-2">
+                          <button
+                            onClick={() => openUserModal("medico", m)}
+                            className="px-2 py-1 rounded border text-blue-600 hover:bg-blue-50"
+                          >
+                            Editar
+                          </button>
+                          <button
+                            onClick={() => deleteUsuario(m.id)}
+                            className="px-2 py-1 rounded border text-red-600 hover:bg-red-50"
+                          >
+                            Eliminar
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
@@ -677,6 +694,7 @@ export default function IndexPage() {
             </div>
           </div>
         )}
+
 
         {activeSection === "reportes" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -718,136 +736,155 @@ export default function IndexPage() {
         {/* Modal CRUD citas */}
         {isModalOpen && editingCita && (
           <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-            <div className="bg-white w-full max-w-lg rounded-lg p-6 shadow-xl">
+            <div className="bg-white w-full max-w-lg rounded-lg p-6 shadow-xl text-sm">
               <h2 className="text-xl font-semibold mb-4">
                 {editingCita.id ? "Editar cita" : "Nueva cita"}
               </h2>
 
-              <div className="grid grid-cols-1 gap-3 text-sm">
-                <label className="text-sm font-medium">Título</label>
-                <input
-                  value={editingCita.titulo}
-                  onChange={(e) =>
-                    setEditingCita({
-                      ...editingCita,
-                      titulo: e.target.value,
-                    })
-                  }
-                  className="w-full px-3 py-2 border rounded"
-                />
-
-                <label className="text-sm font-medium">Médico</label>
-                <select
-                  value={editingCita.medico}
-                  onChange={(e) =>
-                    setEditingCita({
-                      ...editingCita,
-                      medico: e.target.value,
-                    })
-                  }
-                  className="w-full px-3 py-2 border rounded"
-                >
-                  <option value="">Seleccione médico</option>
-                  {medicos.map((m) => (
-                    <option key={m.id} value={m.id}>
-                      {m.nombre} {m.apaterno}
-                    </option>
-                  ))}
-                </select>
-
-                <label className="text-sm font-medium">Paciente</label>
-                <select
-                  value={editingCita.paciente}
-                  onChange={(e) =>
-                    setEditingCita({
-                      ...editingCita,
-                      paciente: e.target.value,
-                    })
-                  }
-                  className="w-full px-3 py-2 border rounded"
-                >
-                  <option value="">Seleccione paciente</option>
-                  {pacientes.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.nombre} {p.apaterno}
-                    </option>
-                  ))}
-                </select>
-
-                <label className="text-sm font-medium">Fecha</label>
-                <input
-                  type="date"
-                  value={editingCita.fecha}
-                  onChange={(e) =>
-                    setEditingCita({ ...editingCita, fecha: e.target.value })
-                  }
-                  className="w-full px-3 py-2 border rounded"
-                />
-
-                <label className="text-sm font-medium">Hora</label>
-                <input
-                  type="time"
-                  value={editingCita.hora}
-                  onChange={(e) =>
-                    setEditingCita({ ...editingCita, hora: e.target.value })
-                  }
-                  className="w-full px-3 py-2 border rounded"
-                />
-
-                <label className="text-sm font-medium">Estado</label>
-                <select
-                  value={editingCita.estado}
-                  onChange={(e) =>
-                    setEditingCita({
-                      ...editingCita,
-                      estado: e.target.value as Cita["estado"],
-                    })
-                  }
-                  className="w-full px-3 py-2 border rounded"
-                >
-                  <option value="pendiente">Pendiente</option>
-                  <option value="completada">Completada</option>
-                  <option value="cancelada">Cancelada / No asistió</option>
-                </select>
-
-                <label className="text-sm font-medium">Notas</label>
-                <textarea
-                  value={editingCita.notas || ""}
-                  onChange={(e) =>
-                    setEditingCita({ ...editingCita, notas: e.target.value })
-                  }
-                  className="w-full px-3 py-2 border rounded h-24"
-                />
-
-                <div className="flex justify-end gap-2 mt-4">
-                  {editingCita.id && (
-                    <button
-                      onClick={() => deleteCita(editingCita.id)}
-                      className="px-4 py-2 rounded border text-red-600"
-                    >
-                      Eliminar
-                    </button>
-                  )}
-                  <button
-                    onClick={() => {
-                      setModalOpen(false);
-                      setEditingCita(null);
-                    }}
-                    className="px-4 py-2 rounded border"
-                  >
-                    Cancelar
-                  </button>
-                  <button
-                    onClick={() => saveCita(editingCita)}
-                    className="px-4 py-2 rounded bg-blue-600 text-white"
-                  >
-                    Guardar
-                  </button>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {/* Título */}
+                <div className="md:col-span-2">
+                  <label className="font-medium">Título</label>
+                  <input
+                    value={editingCita.titulo}
+                    onChange={(e) =>
+                      setEditingCita({ ...editingCita, titulo: e.target.value })
+                    }
+                    className="border px-3 py-2 rounded w-full"
+                  />
                 </div>
+
+                {/* Médico */}
+                <div>
+                  <label className="font-medium">Médico</label>
+                  <select
+                    value={editingCita.medico}
+                    onChange={(e) =>
+                      setEditingCita({ ...editingCita, medico: e.target.value })
+                    }
+                    className="border px-3 py-2 rounded w-full"
+                  >
+                    <option value="">Seleccione médico</option>
+                    {medicos.map((m) => (
+                      <option key={m.id} value={m.id}>
+                        {m.nombre} {m.apaterno}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Paciente */}
+                <div>
+                  <label className="font-medium">Paciente</label>
+                  <select
+                    value={editingCita.paciente}
+                    onChange={(e) =>
+                      setEditingCita({
+                        ...editingCita,
+                        paciente: e.target.value,
+                      })
+                    }
+                    className="border px-3 py-2 rounded w-full"
+                  >
+                    <option value="">Seleccione paciente</option>
+                    {pacientes.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.nombre} {p.apaterno}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Fecha */}
+                <div>
+                  <label className="font-medium">Fecha</label>
+                  <input
+                    type="date"
+                    value={editingCita.fecha}
+                    onChange={(e) =>
+                      setEditingCita({ ...editingCita, fecha: e.target.value })
+                    }
+                    className="border px-3 py-2 rounded w-full"
+                  />
+                </div>
+
+                {/* Hora */}
+                <div>
+                  <label className="font-medium">Hora</label>
+                  <input
+                    type="time"
+                    value={editingCita.hora}
+                    onChange={(e) =>
+                      setEditingCita({ ...editingCita, hora: e.target.value })
+                    }
+                    className="border px-3 py-2 rounded w-full"
+                  />
+                </div>
+
+                {/* Estado */}
+                <div>
+                  <label className="font-medium">Estado</label>
+                  <select
+                    value={editingCita.estado}
+                    onChange={(e) =>
+                      setEditingCita({
+                        ...editingCita,
+                        estado: e.target.value as Cita["estado"],
+                      })
+                    }
+                    className="border px-3 py-2 rounded w-full"
+                  >
+                    <option value="pendiente">Pendiente</option>
+                    <option value="completada">Completada</option>
+                    <option value="cancelada">Cancelada / No asistió</option>
+                  </select>
+                </div>
+
+                {/* Notas texto largo */}
+                <div className="md:col-span-2">
+                  <label className="font-medium">Notas</label>
+                  <textarea
+                    value={editingCita.notas || ""}
+                    onChange={(e) =>
+                      setEditingCita({ ...editingCita, notas: e.target.value })
+                    }
+                    className="border px-3 py-2 rounded w-full h-24"
+                  />
+                </div>
+              </div>
+
+              {/* Botones */}
+              <div className="flex justify-end gap-2 mt-4">
+                {editingCita.id && (
+                  <button
+                    onClick={() => deleteCita(editingCita.id)}
+                    className="px-4 py-2 rounded border text-red-600"
+                  >
+                    Eliminar
+                  </button>
+                )}
+
+                <button
+                  onClick={() => {
+                    setModalOpen(false);
+                    setEditingCita(null);
+                  }}
+                  className="px-4 py-2 rounded border"
+                >
+                  Cancelar
+                </button>
+
+                <button
+                  onClick={() => saveCita(editingCita)}
+                  className="px-4 py-2 rounded bg-blue-600 text-white"
+                >
+                  Guardar
+                </button>
               </div>
             </div>
           </div>
         )}
+
 
         {/* Modal USUARIO */}
         {userModalOpen && editingUser && (

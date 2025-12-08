@@ -19,7 +19,7 @@ type Cita = {
   paciente: string;
   notas?: string;
   estado: "pendiente" | "completada" | "cancelada" | string;
-  resultado?: string; // ← NUEVO CAMPO
+  resultado?: string; 
 };
 
 type Medico = {
@@ -328,92 +328,105 @@ export default function PacienteDashboard() {
               {editing.id ? "Editar cita" : "Agendar nueva cita"}
             </h2>
 
-            <label className="block text-sm mb-1">Título / Motivo</label>
-            <input
-              type="text"
-              className="border p-2 w-full mb-3"
-              value={editing.titulo}
-              onChange={(e) =>
-                setEditing({ ...editing, titulo: e.target.value })
-              }
-            />
-
-            <label className="block text-sm mb-1">Médico</label>
-            <select
-              className="border p-2 w-full mb-3"
-              value={editing.medico}
-              onChange={(e) =>
-                setEditing({ ...editing, medico: e.target.value })
-              }
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault(); 
+                guardarCita();
+              }}
             >
-              <option value="">Seleccione médico</option>
-              {medicos.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.nombre} {m.apaterno}
-                </option>
-              ))}
-            </select>
+              <label className="block text-sm mb-1">Título / Motivo</label>
+              <input
+                type="text"
+                className="border p-2 w-full mb-3"
+                value={editing.titulo}
+                onChange={(e) =>
+                  setEditing({ ...editing, titulo: e.target.value })
+                }
+                required
+              />
 
-            <label className="block text-sm mb-1">Fecha</label>
-            <input
-              type="date"
-              className="border p-2 w-full mb-3"
-              value={editing.fecha}
-              onChange={(e) =>
-                setEditing({ ...editing, fecha: e.target.value })
-              }
-            />
-
-            <label className="block text-sm mb-1">Hora</label>
-            <input
-              type="time"
-              className="border p-2 w-full mb-3"
-              value={editing.hora}
-              onChange={(e) =>
-                setEditing({ ...editing, hora: e.target.value })
-              }
-            />
-
-            <label className="block text-sm mb-1">Notas</label>
-            <textarea
-              className="border p-2 w-full mb-3 h-20"
-              value={editing.notas || ""}
-              onChange={(e) =>
-                setEditing({ ...editing, notas: e.target.value })
-              }
-            />
-
-            {/* Resultado solo lectura para el paciente */}
-            {editing.resultado && (
-              <>
-                <label className="block text-sm mb-1">
-                  Resultado del médico
-                </label>
-                <textarea
-                  className="border p-2 w-full mb-3 h-20 bg-gray-50 text-gray-700"
-                  value={editing.resultado}
-                  readOnly
-                />
-              </>
-            )}
-
-            <div className="flex gap-2 mb-2">
-              <button
-                onClick={guardarCita}
-                className="bg-green-600 text-white w-full py-2 rounded"
+              <label className="block text-sm mb-1">Médico</label>
+              <select
+                className="border p-2 w-full mb-3"
+                value={editing.medico}
+                onChange={(e) =>
+                  setEditing({ ...editing, medico: e.target.value })
+                }
+                required
               >
-                Guardar
-              </button>
-              <button
-                onClick={() => {
-                  setIsOpen(false);
-                  setEditing(null);
-                }}
-                className="w-full py-2 rounded border"
-              >
-                Cancelar
-              </button>
-            </div>
+                <option value="">Seleccione médico</option>
+                {medicos.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.nombre} {m.apaterno}
+                  </option>
+                ))}
+              </select>
+
+              <label className="block text-sm mb-1">Fecha</label>
+              <input
+                type="date"
+                className="border p-2 w-full mb-3"
+                value={editing.fecha}
+                onChange={(e) =>
+                  setEditing({ ...editing, fecha: e.target.value })
+                }
+                required
+              />
+
+              <label className="block text-sm mb-1">Hora</label>
+              <input
+                type="time"
+                className="border p-2 w-full mb-3"
+                value={editing.hora}
+                onChange={(e) =>
+                  setEditing({ ...editing, hora: e.target.value })
+                }
+                required
+              />
+
+              <label className="block text-sm mb-1">Notas</label>
+              <textarea
+                className="border p-2 w-full mb-3 h-20"
+                value={editing.notas || ""}
+                onChange={(e) =>
+                  setEditing({ ...editing, notas: e.target.value })
+                }
+                required
+              />
+
+              {/* Resultado solo lectura para el paciente */}
+              {editing.resultado && (
+                <>
+                  <label className="block text-sm mb-1">
+                    Resultado del médico
+                  </label>
+                  <textarea
+                    className="border p-2 w-full mb-3 h-20 bg-gray-50 text-gray-700"
+                    value={editing.resultado}
+                    readOnly
+                  />
+                </>
+              )}
+
+              <div className="flex gap-2 mb-2">
+                <button
+                  type="submit"
+                  className="bg-green-600 text-white w-full py-2 rounded"
+                >
+                  Guardar
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setEditing(null);
+                  }}
+                  className="w-full py-2 rounded border"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
